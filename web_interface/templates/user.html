@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web interface</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <a class="main-btn" href="{{url_for('index')}}"><input type="button" value="На Главную"></a>
+    <div class="image-container">
+        <div class="submit-bar"></div>
+        <img src="" alt="Фото жакета" id="Image">
+    </div>
+
+    <div class="button-container">
+        <input type="button" name="Submit" value="Вызвать">
+    </div>
+    <script type="application/javascript" src="{{ url_for('static', filename='flasksocket-client.js') }}"></script>
+</body>
+</html>

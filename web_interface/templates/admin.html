@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web interface</title>
+    <link rel="stylesheet" href="static/adm_style.css">
+</head>
+<body>
+    <a class="main-btn" href="{{url_for('index')}}"><input type="button" value="На Главную"></a>
+    <h1 class="lbl">Images saved</h1>
+    <div id="counter">333</div>
+    <div class="buttons">
+        <input class="stop" type="button" value="Stop Monitoring">
+        <input class="start" type="button" value="Start Monitoring">
+    </div>
+    <div id="is_monitoring"></div>
+    <script type="application/javascript" src="{{ url_for('static', filename='flasksocket-admin.js') }}"></script>
+</body>
+</html>

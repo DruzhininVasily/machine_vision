@@ -1,0 +1,15 @@
+.main-btn {
+    display: flex;
+    text-decoration: none;
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 50px;
+}
+
+
+#Image {
+    width: 85%;
+}
