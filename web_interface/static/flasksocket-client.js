@@ -1,13 +1,8 @@
 
 document.addEventListener('DOMContentLoaded', function(){
-    const buttonGet = document.querySelector("[name=Submit]");
     var reqContainer = document.querySelector(".submit-bar");
 
     let websocketClient  = new WebSocket("ws://192.168.0.57:5000/show_photo");
-
-    buttonGet.onclick = () => {
-        websocketClient.send("Вызов");
-    }
 
 
     function renderSubbar() {
@@ -29,11 +24,16 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     }
 
+    function getSubmit() {
+        websocketClient.send("get submit")
+    }
+
     function getImg() {
         websocketClient.send("Дай фото")
     };
 
-    let timerId = setInterval(getImg, 3000);
+    let timerId = setInterval(getImg, 2000);
+    let timerSubmit = setInterval(getSubmit, 1000);
 
     websocketClient.onmessage = (message) => {
         if (message.data == 'request submit') {renderSubbar()}

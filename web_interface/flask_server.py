@@ -49,11 +49,14 @@ def unauthorized(error):
 def show_photo(sock):
     while True:
         new_message = sock.receive()
-        # print(new_message)
+        print(new_message)
         if new_message == "Дай фото":
             sock.send("static/data/" + os.listdir("C:/PycharmProjects/Machine_vision/web_interface/static/data")[-1])
-        elif new_message == "Вызов":
-            sock.send("request submit")
+        elif new_message == "get submit":
+            if plc.pallet_is_blocking is True:
+                sock.send("request submit")
+        elif new_message == "Подтверждено":
+            plc.submit_button()
 
 
 # Вебсоккет для admin

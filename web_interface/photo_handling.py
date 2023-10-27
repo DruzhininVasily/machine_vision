@@ -4,9 +4,11 @@ import numpy as np
 from tensorflow import keras
 from datetime import datetime as dt
 import sqlite3 as sq
+import time
 
 
-def get_photo():
+def get_photo(data_pallet, obj):
+    # time.sleep(1)
     cap = cv2.VideoCapture('rtsp://admin:SLB_123456@192.168.0.64/80/video')
     ret, frame = cap.read()
     if len(os.listdir('C:/PycharmProjects/Machine_vision/web_interface/static/data')) == 0:
@@ -18,10 +20,11 @@ def get_photo():
             name = '0' + name
     cv2.imwrite("C:/PycharmProjects/Machine_vision/web_interface/static/data/{}.jpg".format(name), frame)
     cap.release()
-    check("C:/PycharmProjects/Machine_vision/web_interface/static/data/{}.jpg".format(name))
+    obj.camera_shot()
+    check("C:/PycharmProjects/Machine_vision/web_interface/static/data/{}.jpg".format(name), data_pallet, obj)
 
 
-def check(img_path, pallet=123):
+def check(img_path, pallet, obj):
     model = keras.models.load_model('C:/PycharmProjects/Machine_vision/model_color_0.2')
 
     test_img = photo_handler(img_path)
@@ -32,6 +35,14 @@ def check(img_path, pallet=123):
         cur = con.cursor()
         cur.execute("""INSERT INTO pallets (pallet_number, datetime, path, OK, NOT_OK) VALUES (?, ?, ?, ?, ?)""",
                     (pallet, now_time, img_path, round(float(check_result[0][0]), 3), round(float(check_result[0][1]), 3)))
+
+    if check_result[0][1] > 0.01:
+        obj.blocking_pallet()
+        with sq.connect("C:/PycharmProjects/Machine_vision/data_base/trash_pallets.db") as con:
+            cur = con.cursor()
+            cur.execute("""INSERT INTO trash (pallet_number, datetime, path, OK, NOT_OK) VALUES (?, ?, ?, ?, ?)""",
+                        (pallet, now_time, img_path, round(float(check_result[0][0]), 3),
+                         round(float(check_result[0][1]), 3)))
 
 
 def photo_handler(path):
