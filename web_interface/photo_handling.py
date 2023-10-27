@@ -20,7 +20,6 @@ def get_photo(data_pallet, obj):
             name = '0' + name
     cv2.imwrite("C:/PycharmProjects/Machine_vision/web_interface/static/data/{}.jpg".format(name), frame)
     cap.release()
-    obj.camera_shot()
     check("C:/PycharmProjects/Machine_vision/web_interface/static/data/{}.jpg".format(name), data_pallet, obj)
 
 
@@ -36,13 +35,14 @@ def check(img_path, pallet, obj):
         cur.execute("""INSERT INTO pallets (pallet_number, datetime, path, OK, NOT_OK) VALUES (?, ?, ?, ?, ?)""",
                     (pallet, now_time, img_path, round(float(check_result[0][0]), 3), round(float(check_result[0][1]), 3)))
 
-    if check_result[0][1] > 0.01:
+    if check_result[0][1] > 0.7:
         obj.blocking_pallet()
         with sq.connect("C:/PycharmProjects/Machine_vision/data_base/trash_pallets.db") as con:
             cur = con.cursor()
             cur.execute("""INSERT INTO trash (pallet_number, datetime, path, OK, NOT_OK) VALUES (?, ?, ?, ?, ?)""",
                         (pallet, now_time, img_path, round(float(check_result[0][0]), 3),
                          round(float(check_result[0][1]), 3)))
+    obj.camera_shot()
 
 
 def photo_handler(path):
