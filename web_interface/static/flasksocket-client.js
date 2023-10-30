@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function(){
             '<h2>Залив!!!</h2>' +
             "<input id='submit' type='button' value='Подтвердить'>";
             newContainer.className = "submit-bar";
-            newContainer.style.cssText = 'background-color: #b8b9ba; color: red; padding: 50px; max-height: 200px';
+            newContainer.style.cssText = 'background-color: #fcf6f0; border: 1px solid black; border-radius: 5px; color: red; padding: 50px; max-height: 200px';
         reqContainer.parentNode.replaceChild(newContainer, reqContainer);
         const buttonSubmit = document.querySelector("#submit");
 
