@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import os
 
+
 def naming(path):
     if len(os.listdir(path)) == 0:
         name = '000001'

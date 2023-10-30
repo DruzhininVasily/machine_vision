@@ -8,16 +8,17 @@ lock = threading.Lock()
 
 
 class PlcClient(snap7.client.Client):
+    # Класс для взаимодейтвия с ПЛК. Наследуется от класса Client пакета snap7
 
     def __init__(self, ip, rack, slot):
         self.is_started = False
+        self.pallet_is_blocking = False
         self.flag = False
         self.data_in = None
         self.data_out = None
         self.data_pallet = None
         super().__init__()
         self.connect(ip, rack, slot)
-        self.pallet_is_blocking = False
 
     def monitoring(self):
         # Маркер мониторинга
@@ -41,6 +42,7 @@ class PlcClient(snap7.client.Client):
                 print("Ошибка соединения с PLC. Перезапустите приложение")
             finally:
                 lock.release()
+            # Создание потока для работы с фотографиями
             th = threading.Thread(target=get_photo, name='get photo', args=(self.data_pallet, self,))
             if val is True and self.flag is False:
                 th.start()
@@ -56,11 +58,13 @@ class PlcClient(snap7.client.Client):
             time.sleep(1)
 
     def stop_monitoring(self):
+        # Остановка цикла мониторинга
         lock.acquire()
         try:
             self.is_started = False
         finally:
             lock.release()
+        # Выключение режима с камерой
         lock.acquire()
         try:
             self.data_out = self.read_area(tp.Areas['MK'], 0, 6305, 1)
@@ -68,6 +72,7 @@ class PlcClient(snap7.client.Client):
             self.write_area(tp.Areas['MK'], 0, 6305, self.data_out)
         finally:
             lock.release()
+        # Возврат всех битов к исходному состоянию
         lock.acquire()
         try:
             self.set_default()
@@ -84,6 +89,7 @@ class PlcClient(snap7.client.Client):
         finally:
             lock.release()
 
+    # Блокировка паллеты и ожидание подтверждения оператора
     def blocking_pallet(self):
         lock.acquire()
         try:
@@ -97,6 +103,7 @@ class PlcClient(snap7.client.Client):
         finally:
             lock.release()
 
+    # Подтверждение оператора
     def submit_button(self):
         lock.acquire()
         try:
