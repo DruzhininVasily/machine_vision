@@ -25,7 +25,7 @@ class PlcClient(snap7.client.Client):
         self.is_started = True
         # Включение режима с камерой
         self.data_out = self.read_area(tp.Areas['MK'], 0, 6305, 1)
-        snap7.util.set_bool(self.data_out, 0, 3, False)
+        snap7.util.set_bool(self.data_out, 0, 3, True)
         self.write_area(tp.Areas['MK'], 0, 6305, self.data_out)
         # Мониторинг состояния датчика
         while self.is_started is True:
@@ -35,7 +35,7 @@ class PlcClient(snap7.client.Client):
                 # self.data_in = self.read_area(tp.Areas['MK'], 0, 6305, 1)
                 val = snap7.util.get_bool(self.data_in, 0, 0)
                 # val = snap7.util.get_bool(self.data_in, 0, 4)
-                self.data_pallet = self.read_area(tp.Areas['MK'], 0, 6102, 2)
+                self.data_pallet = self.read_area(tp.Areas['MK'], 0, 6306, 2)
                 self.data_pallet = snap7.util.get_word(self.data_pallet, 0)
             except RuntimeError:
                 self.is_started = False
@@ -68,7 +68,7 @@ class PlcClient(snap7.client.Client):
         lock.acquire()
         try:
             self.data_out = self.read_area(tp.Areas['MK'], 0, 6305, 1)
-            snap7.util.set_bool(self.data_out, 0, 3, True)
+            snap7.util.set_bool(self.data_out, 0, 3, False)
             self.write_area(tp.Areas['MK'], 0, 6305, self.data_out)
         finally:
             lock.release()
@@ -93,7 +93,7 @@ class PlcClient(snap7.client.Client):
     def blocking_pallet(self):
         lock.acquire()
         try:
-            snap7.util.set_bool(self.data_out,0, 0, False)
+            snap7.util.set_bool(self.data_out,0, 0, True)
             self.write_area(tp.Areas['MK'], 0, 6305, self.data_out)
         finally:
             lock.release()
@@ -120,7 +120,7 @@ class PlcClient(snap7.client.Client):
     # Возврат значений в default
     def set_default(self):
         self.data_out = self.read_area(tp.Areas['MK'], 0, 6305, 1)
-        snap7.util.set_bool(self.data_out, 0, 0, True)
+        snap7.util.set_bool(self.data_out, 0, 0, False)
         snap7.util.set_bool(self.data_out, 0, 1, False)
         snap7.util.set_bool(self.data_out, 0, 2, False)
         self.write_area(tp.Areas['MK'], 0, 6305, self.data_out)
