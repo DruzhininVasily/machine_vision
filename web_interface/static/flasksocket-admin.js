@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function(){
     let timer3 = setInterval(getError, 2500);
 
     btnStart.onclick = () => {
+        document.querySelector(".modal").style.cssText = "display: none";
         sendCommand("Start");
     }
 
