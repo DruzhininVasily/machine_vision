@@ -10,8 +10,13 @@ import sqlite3 as sq
 def get_photo(data_pallet, obj):
     # time.sleep(1)
     # Получение изображения с камеры и сохранение его на жесткий диск
-    cap = cv2.VideoCapture('rtsp://admin:SLB_123456@192.168.0.64/80/video')
-    ret, frame = cap.read()
+    obj.error_camera = False
+    try:
+        cap = cv2.VideoCapture('rtsp://admin:SLB_123456@192.168.0.64/80/video')
+        ret, frame = cap.read()
+    except RuntimeError:
+        print("Ошибка подключения камеры")
+        obj.error_camera = True
     if len(os.listdir('C:/PycharmProjects/Machine_vision/web_interface/static/data')) == 0:
         name = '000001'
     else:

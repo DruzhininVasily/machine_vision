@@ -6,6 +6,7 @@ from threading import Thread
 
 plc = PlcClient('192.168.0.220', 0, 1)
 print('подключено')
+camera_error = False
 
 
 app = Flask(__name__)
@@ -72,6 +73,9 @@ def control(sock):
                 sock.send('is started')
             else:
                 sock.send('not started')
+        elif new_message == "check error":
+            if camera_error is True:
+                sock.send('camera error')
         elif new_message == "Start":
             if plc.is_started is False:
                 th = Thread(target=plc.monitoring, name="Monitoring")

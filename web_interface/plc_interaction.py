@@ -17,6 +17,7 @@ class PlcClient(snap7.client.Client):
         self.data_in = None
         self.data_out = None
         self.data_pallet = None
+        self.error_camera = False
         super().__init__()
         self.connect(ip, rack, slot)
 
