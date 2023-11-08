@@ -58,6 +58,23 @@ body {
 
 }
 
+.select_bar {
+    position: absolute !important;
+    left: 100px;
+    bottom: 100px;
+}
 
+.select_bar select {
+    padding: 10px;
+    background: #e8f2fa;
+    border-radius: 3px;
+}
 
-
+#set-point {
+    background: #e8f2fa;
+    width: 250px;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid black
+    margin-bottom: 5px;
+}

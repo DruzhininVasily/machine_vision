@@ -17,6 +17,18 @@
         <input class="start" type="button" value="Start Monitoring">
     </div>
     <div id="is_monitoring"></div>
+    <div class="select_bar">
+        <select>
+            {% for item in select_list %}
+                {% if loop.index0 == ind %}
+                    <option value="{{ item }}" selected>{{ item }}</option>
+                {% else %}
+                    <option value="{{ item }}">{{ item }}</option>
+                {% endif %}
+            {% endfor %}
+        </select><br>
+        <button id="set-point">Изменить уставку</button>
+    </div>
     <script type="application/javascript" src="{{ url_for('static', filename='flasksocket-admin.js') }}"></script>
 </body>
 </html>

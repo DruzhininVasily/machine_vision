@@ -42,8 +42,13 @@ def check(img_path, pallet, obj):
         cur = con.cursor()
         cur.execute("""INSERT INTO pallets (pallet_number, datetime, path, OK, NOT_OK) VALUES (?, ?, ?, ?, ?)""",
                     (pallet, now_time, img_path, round(float(check_result[0][0]), 3), round(float(check_result[0][1]), 3)))
+    with sq.connect("C:/PycharmProjects/Machine_vision/data_base/trash_pallets.db") as con:
+        cur = con.cursor()
+        cur.execute("""SELECT setpoint FROM config""")
+        setpoint = cur.fetchone()
+        print(setpoint)
     # Сохранение параметров фото с заливом в БД
-    if check_result[0][1] > 0.7:
+    if check_result[0][1] > float(setpoint[0]):
         # Блокировка паллеты (plc_interaction --> PlcClient ---> blocking_pallet)
         obj.blocking_pallet()
         with sq.connect("C:/PycharmProjects/Machine_vision/data_base/trash_pallets.db") as con:

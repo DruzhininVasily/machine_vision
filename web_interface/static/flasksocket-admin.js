@@ -2,6 +2,8 @@
 document.addEventListener('DOMContentLoaded', function(){
     var btnStop = document.querySelector(".stop");
     var btnStart = document.querySelector(".start");
+    var btnSetPoint = document.querySelector("#set-point")
+    var rowSetPoint = document.querySelector(".select_bar select")
 
     let websocketClient  = new WebSocket("ws://192.168.0.57:5000/control");
 
@@ -32,6 +34,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
     btnStop.onclick = () => {
         sendCommand("Stop");
+    }
+
+    btnSetPoint.onclick = () => {
+        sendCommand(rowSetPoint.value)
+        btnSetPoint.style.cssText = "background: #0bf702;";
+        setTimeout(() => btnSetPoint.style.cssText = ("background: #e8f2fa;"), 2000);
     }
 
     websocketClient.onmessage = (message) => {
