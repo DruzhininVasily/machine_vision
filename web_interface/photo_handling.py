@@ -31,7 +31,7 @@ def get_photo(data_pallet, obj):
 
 
 def check(img_path, pallet, obj):
-    model = keras.models.load_model('C:/PycharmProjects/Machine_vision/model_color_0.3')
+    model = keras.models.load_model('C:/PycharmProjects/Machine_vision/model_color_0.4')
 
     test_img = photo_handler(img_path)
     check_result = model.predict(np.array([test_img / 255]))
@@ -46,7 +46,6 @@ def check(img_path, pallet, obj):
         cur = con.cursor()
         cur.execute("""SELECT setpoint FROM config""")
         setpoint = cur.fetchone()
-        print(setpoint)
     # Сохранение параметров фото с заливом в БД
     if check_result[0][1] > float(setpoint[0]):
         # Блокировка паллеты (plc_interaction --> PlcClient ---> blocking_pallet)
