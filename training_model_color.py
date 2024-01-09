@@ -60,9 +60,9 @@ model.compile(optimizer='adam',
 
 his = model.fit(x_train, y_train, batch_size=16, epochs=5, validation_split=0.2)
 
-model.save('model_color_0.4')
+model.save('model_color_0.5')
 
-test_img = cv2.imread('data_color/00081.jpg')
+test_img = cv2.imread('data_color/00088.jpg')
 print(model.predict(np.array([test_img / 255])))
-test_img1 = cv2.imread('data_color/00077.jpg')
+test_img1 = cv2.imread('data_color/00127.jpg')
 print(model.predict(np.array([test_img1 / 255])))
