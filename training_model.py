@@ -2,8 +2,8 @@ import numpy as np
 import os
 import cv2
 import tensorflow as tf
-from tensorflow import keras
-from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D
+import keras
+
 
 #print(tf.config.list_physical_devices('GPU'))
 
@@ -39,18 +39,18 @@ y_train = np.array(y_train)
 print('Создание модели............')
 # Создаём модель нейросети
 model = keras.Sequential([
-    Conv2D(16, (3, 3), padding='same', activation='relu', input_shape=(280, 280, 3)),
-    Conv2D(16, (3, 3), padding='same', activation='relu'),
-    MaxPooling2D((2, 2), strides=2),
-    Conv2D(32, (3, 3), padding='same', activation='relu'),
-    Conv2D(32, (3, 3), padding='same', activation='relu'),
-    MaxPooling2D((2, 2), strides=2),
-    Conv2D(64, (3, 3), padding='same', activation='relu'),
-    Conv2D(64, (3, 3), padding='same', activation='relu'),
-    MaxPooling2D((2, 2), strides=2),
-    Flatten(),
-    Dense(512, activation='relu'),
-    Dense(2, activation='softmax')
+    keras.layers.Conv2D(16, (3, 3), padding='same', activation='relu', input_shape=(280, 280, 3)),
+    keras.layers.Conv2D(16, (3, 3), padding='same', activation='relu'),
+    keras.layers.MaxPooling2D((2, 2), strides=2),
+    keras.layers.Conv2D(32, (3, 3), padding='same', activation='relu'),
+    keras.layers.Conv2D(32, (3, 3), padding='same', activation='relu'),
+    keras.layers.MaxPooling2D((2, 2), strides=2),
+    keras.layers.Conv2D(64, (3, 3), padding='same', activation='relu'),
+    keras.layers.Conv2D(64, (3, 3), padding='same', activation='relu'),
+    keras.layers.MaxPooling2D((2, 2), strides=2),
+    keras.layers.Flatten(),
+    keras.layers.Dense(512, activation='relu'),
+    keras.layers.Dense(2, activation='softmax')
 ])
 print(model.summary())
 

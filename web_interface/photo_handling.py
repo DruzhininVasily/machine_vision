@@ -1,7 +1,7 @@
 import cv2
 import os
 import numpy as np
-from tensorflow import keras
+import keras
 from datetime import datetime as dt
 import sqlite3 as sq
 # import time
@@ -31,7 +31,7 @@ def get_photo(data_pallet, obj):
 
 
 def check(img_path, pallet, obj):
-    model = keras.models.load_model('C:/PycharmProjects/Machine_vision/model_color_0.5')
+    model = keras.models.load_model('C:/PycharmProjects/Machine_vision/model_color_1.0')
 
     test_img = photo_handler(img_path)
     check_result = model.predict(np.array([test_img / 255]))

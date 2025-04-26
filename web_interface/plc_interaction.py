@@ -1,5 +1,5 @@
 import snap7
-from snap7 import types as tp
+from snap7 import type as tp
 import time
 import threading
 from photo_handling import get_photo

@@ -19,7 +19,7 @@ def index():
     if request.method == "POST" and request.form['username'] == 'user':
         session['userLogged'] = request.form['username']
         return redirect(session['userLogged'])
-    elif request.method == "POST" and request.form['username'] == 'admin' and request.form['psw'] == '12345':
+    elif request.method == "POST" and request.form['username'] == 'adфmin' and request.form['psw'] == '12345':
         session['userLogged'] = request.form['username']
         return redirect(session['userLogged'])
     return render_template('index.html')
